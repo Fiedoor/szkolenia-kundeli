@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="pl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Centrum szkoleniowe dla psów</title>
     <link rel="stylesheet" href="./style.css">
 </head>
-
 <body>
     <div id="baner">
         Centrum szkoleniowe dla psów
@@ -67,79 +65,96 @@
             </table>
             <h2>Formularz zgłoszeniowy</h2>
             <form method="post">
-                <div class="form">
-                    Dane właściciela<br>
-                    <label for="imie">
-                        <span>Imię:</span>
-                        <input type="text" name="imie"></input>
-                    </label>
-
-                    <label for="nazwisko">
-                        <span>Nazwisko:</span>
-                        <input type="text" name="nazwisko"></input>
-                    </label>
-
-                    <label for="mail">
-                        <span>Adres mailowy:</span>
-                        <input type="mail" name="mail"></input>
-                    </label>
-                </div>
-                <div class="form">
-                    Dane psa<br>
-                    <label for="imiepsa">
-                        <span>Imię:</span>
-                        <input type="text" name="imiepsa"></input>
-                    </label>
-                    <label for="rasa">
-                        <span>Rasa:</span>
-                        <input type="text" name="rasa"></input>
-                    </label>
-                    <label for="data">
-                        <span>Data urodzenia:</span>
-                        <input type="date" name="data" style="width:174px;"></input>
-                    </label>
-                    <label for="typ" class="typ">
-                        <span>Typ szkolenia:</span>
-                        <select style="width:174px;">
-                            <option value="1">Psie przedszkole (P1)</option>
-                            <option value="2">Posłuszeństwo psa (P2)</option>
-                            <option value="3">Posłuszeństwo psa (P3)</option>
-                            <option value="4">Psie przedszkole (P4)</option>
-                        </select>
-                    </label>
-                    <br>
-                    <input type="submit" value="Wyślij zgłoszenie">
-                </div>
+            <div class="form">
+                Dane właściciela<br>
+            <label>
+                <span>Imię:</span>
+                <input type="text" name="imie" id="imie">
+            </label>
+            <label>
+                <span>Nazwisko:</span>
+                <input type="text" name="nazwisko" id="nazwisko">
+            </label>
+            <label>
+                <span>Adres mailowy:</span>
+                <input type="email" name="mail" id="mail">
+            </label>
+            </div>
+            <div class="form">
+            Dane psa<br>
+            <label>
+                <span>Imię:</span>
+                <input type="text" name="imiepsa" id="imiepsa">
+            </label>
+            <label>
+                <span>Rasa:</span>
+                <input type="text" name="rasa" id="rasa">
+            </label>
+            <label>
+                <span>Data urodzenia:</span>
+                <input type="date" name="data" id="data" style="width:174px;">
+            </label>
+            <label>
+                <span>Typ szkolenia:</span>
+                <select style="width:174px;" name="psiur" id="psiur">
+                    <option name="psiur" value="1">Psie przedszkole (P1)</option>
+                    <option value="2">Posłuszeństwo psa (P2)</option>
+                    <option value="3">Posłuszeństwo psa (P3)</option>
+                    <option value="4">Psie przedszkole (P4)</option>
+                </select>
+            </label>
+            <br>
+            <input type="submit" value="Wyślij zgłoszenie">
+            </div>
             </form>
         </div>
     </main>
     <footer>
-
     </footer>
 </body>
-
 </html>
 
 <?php
-error_reporting(0);
-$host = "localhost";
-$usr = "root";
-$pass = "";
-$db = "szkolenia";
-$imiewlasciciela = $_POST['imie'];
-$nazwiskowlasciciela = $_POST['nazwisko'];
-$mail = $_POST['mail'];
-$imiepsa = $_POST['imiepsa'];
-$rasapsa = $_POST['rasa'];
-$data = $_POST['data'];
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-$conn = mysqli_connect($host, $usr, $pass, $db);
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "szkolenia";
 
-$query = "SELECT id, imie, nazwisko FROM pracownicy WHERE id=2;";
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-$res = mysqli_query($conn, $query);
+if ($conn->connect_error) {
+    die("Błąd połączenia z bazą danych: " . $conn->connect_error);
+}
 
-echo "Zgłoszenie zostało zapisane";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $imie = $_POST["imie"];
+    $nazwisko = $_POST["nazwisko"];
+    $mail = $_POST["mail"];
+    $imiepsa = $_POST["imiepsa"];
+    $rasa = $_POST["rasa"];
+    $data = $_POST["data"];
+    // $psiur = $_POST["psiur"]; 
 
-mysqli_close($conn);
+    $sql_wlasciciel = "INSERT INTO wlasciciel (Imie, Nazwisko, AdresMail) VALUES ('$imie', '$nazwisko', '$mail')";
+
+    if ($conn->query($sql_wlasciciel) === TRUE) {
+        $id_wlasciciela = $conn->insert_id;
+
+        $sql_pies = "INSERT INTO pies (IdWlasciciela, Imie, Rasa, DataUrodzenia) VALUES ('$id_wlasciciela', '$imiepsa', '$rasa', '$data')";
+
+        if ($conn->query($sql_pies) === TRUE) {
+            echo "Zgłoszenie zostało zapisane w bazie.";
+        } else {
+            echo "Błąd: " . $sql_pies . "<br>" . $conn->error;
+        }
+    } else {
+        echo "Błąd: " . $sql_wlasciciel . "<br>" . $conn->error;
+    }
+}
+
+$conn->close();
 ?>
