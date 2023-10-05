@@ -1,0 +1,4 @@
+Zapytanie 1: SELECT wlasciciel.Imie, wlasciciel.Nazwisko, pies.Imie FROM wlasciciel INNER JOIN pies ON wlasciciel.Id = pies.Idwlasciciela;
+Zapytanie 2: SELECT pies.Imie FROM pies INNER JOIN szkolenie ON pies.Id = szkolenie.IdPsa WHERE szkolenie.Id = 1 OR szkolenie.Id = 4
+Zapytanie 3: CREATE USER 'Adam'@'localhost' IDENTIFIED BY 'Ada23!Ko';
+Zapytanie 4: GRANT INSERT, UPDATE, SELECT ON szkolenia.wlasciciel TO 'Adam'@'localhost';

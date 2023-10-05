@@ -1,0 +1,110 @@
+* {
+    background-color: #dcd3b6;
+}
+
+label {
+    display: block;
+}
+
+label span {
+    display: inline-block;
+    text-align: left;
+    width: 200px;
+}
+
+
+
+#baner {
+    height: 10%;
+    background-color: #906030;
+    text-align: center;
+    font-size: 50px;
+    color: white;
+    letter-spacing: 8px;
+    font-weight: bold;
+}
+
+#blok-pod-banerem,
+#blok-pod-banerem p,
+h3 {
+    height: 35%;
+    background-color: #433d38;
+    color: white;
+    text-align: right;
+}
+
+#blok-pod-banerem td,
+img {
+    background-color: #433d38;
+}
+
+#lewy,
+#prawy {
+    height: 57%;
+    width: 50%;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+}
+
+#lewy {
+    background-color: #dddddd;
+    font-size: 1.5em;
+    padding: 20px;
+}
+
+#blok-pod-banerem table {
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    background-color: #433d38;
+}
+
+#prawy table {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    border: 2px solid #663300;
+    border-collapse: collapse;
+}
+
+h2 {
+    color: #663300;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+#prawy td {
+    text-align: center;
+    border: 2px solid #663300;
+}
+
+form {
+    margin-left: 10%;
+    display: flex;
+    flex-direction: row;
+}
+
+.form {
+    border: 1px solid whitesmoke;
+    border-collapse: collapse;
+    width: 50%;
+}
+
+#prawy th {
+    font-weight: bold;
+    border: 2px solid #663300;
+}
+
+fieldset {
+    float: left;
+    width: 300px;
+    height: 150px;
+}
+
+label {
+    margin: 10px;
+    text-align: center;
+}
